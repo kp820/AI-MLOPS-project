@@ -5,28 +5,16 @@ phases:
     commands:
       # Authenticate Docker with ECR
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 528757828730.dkr.ecr.ap-south-1.amazonaws.com
-      # Set image tag using commit hash (or use 'latest' if unavailable)
-      - TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)
-      - IMAGE_NAME=namespace/sampleproject:$TAG
-      - FULL_IMAGE_URI=528757828730.dkr.ecr.ap-south-1.amazonaws.com/$IMAGE_NAME
+     
 
   build:
     commands:
       # Build Docker image
-      - docker build -t $IMAGE_NAME .
-      - docker tag $IMAGE_NAME $FULL_IMAGE_URI
+      - docker build -t namespace/sampleproject .
+      
 
   post_build:
     commands:
       # Push image to ECR
-      - docker push $FULL_IMAGE_URI
-      # Prepare image URI file for CodePipeline
-      - echo $FULL_IMAGE_URI > image_uri.txt
-      # Create imagedefinitions.json for ECS deployments (if needed)
-      - echo '[{"name":"$CONTAINER_NAME","imageUri":"$FULL_IMAGE_URI"}]' > imagedefinitions.json
-
-artifacts:
-  files:
-    - imagedefinitions.json
-    - image_uri.txt
-  name: build-output-$(date +%Y-%m-%d)
+      - docker tag namespace/sampleproject:latest 528757828730.dkr.ecr.ap-south-1.amazonaws.com/namespace/sampleproject:latest
+     
