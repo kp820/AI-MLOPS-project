@@ -2,29 +2,19 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: 18
     commands:
-      - echo Installing dependencies...
-      - npm install
-
-  pre_build:
-    commands:
-      - echo Running pre-build checks...
-      - npm run lint
+      - echo "Installing dependencies..."
+      # Example for Python:
+      # - pip install -r requirements.txt
 
   build:
     commands:
-      - echo Running tests...
-      - npm test
-      - echo Building the application...
-      - npm run build
-
-  post_build:
-    commands:
-      - echo Build completed on `date`
+      - echo "Building the project..."
+      # Example build commands:
+      # - mvn package          # Java (Maven)
+      # - go build -o app      # Go
+      # - python setup.py build # Python
 
 artifacts:
   files:
-    - '**/*'
-  base-directory: dist  # Change this to your actual build output directory
+    - "**/*"  # Output all files (customize as needed)
