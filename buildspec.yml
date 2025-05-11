@@ -1,5 +1,5 @@
 #this is a sample buildspec.yml file for AWS CodeBuild
-version: 0.3
+version: 0.4
 
 phases:
   install:
