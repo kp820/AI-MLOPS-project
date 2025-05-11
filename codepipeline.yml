@@ -30,7 +30,7 @@ Resources:
                 Category: Build
                 Owner: AWS
                 Provider: CodeBuild
-                Version: 1
+                Version: 2
               InputArtifacts:
                 - Name: SourceOutput
               OutputArtifacts:
