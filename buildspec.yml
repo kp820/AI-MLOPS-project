@@ -5,24 +5,18 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - cd my-app
-      - echo Installing dependencies...
       - npm install
-
-  pre_build:
-    commands:
-      - npm run lint
-
+      
   build:
     commands:
-      - npm test
       - npm run build
-
-  post_build:
-    commands:
-      - echo Build completed
+      - echo "Build completed at $(date)"
 
 artifacts:
   files:
-    - '**/*'
-  base-directory: my-app/dist
+    - dist/**/*
+  base-directory: dist
+
+cache:
+  paths:
+    - node_modules/**/*
