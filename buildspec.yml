@@ -5,18 +5,10 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
+      - echo "Working directory: $(pwd)"
+      - ls -la
       - npm install
-      
+
   build:
     commands:
       - npm run build
-      - echo "Build completed at $(date)"
-
-artifacts:
-  files:
-    - dist/**/*
-  base-directory: dist
-
-cache:
-  paths:
-    - node_modules/**/*
