@@ -3,32 +3,30 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
-      - aws --version
-      - version: 0.2
-
-phases:
-  pre_build:
-    commands:
-      - echo Logging in to Amazon ECR...
-      - aws --version
+      # Authenticate Docker with ECR
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 528757828730.dkr.ecr.ap-south-1.amazonaws.com
-      
-build:
-    commands:
-      - echo Build started on `date`
-      - echo Building the Docker image...
-      - docker build -t namespace/sampleproject .
+      # Set image tag using commit hash (or use 'latest' if unavailable)
+      - TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)
+      - IMAGE_NAME=namespace/sampleproject:$TAG
+      - FULL_IMAGE_URI=528757828730.dkr.ecr.ap-south-1.amazonaws.com/$IMAGE_NAME
 
-post_build:
+  build:
     commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker image to ECR...
-      - docker tag namespace/sampleproject:latest 528757828730.dkr.ecr.ap-south-1.amazonaws.com/namespace/sampleproject:latest
+      # Build Docker image
+      - docker build -t $IMAGE_NAME .
+      - docker tag $IMAGE_NAME $FULL_IMAGE_URI
 
-post_pushed:
+  post_build:
     commands:
-      - echo Post-push actions completed
-      - push this image to your newly created AWS repository
-      - docker push 528757828730.dkr.ecr.ap-south-1.amazonaws.com/namespace/sampleproject:latest
+      # Push image to ECR
+      - docker push $FULL_IMAGE_URI
+      # Prepare image URI file for CodePipeline
+      - echo $FULL_IMAGE_URI > image_uri.txt
+      # Create imagedefinitions.json for ECS deployments (if needed)
+      - echo '[{"name":"$CONTAINER_NAME","imageUri":"$FULL_IMAGE_URI"}]' > imagedefinitions.json
 
+artifacts:
+  files:
+    - imagedefinitions.json
+    - image_uri.txt
+  name: build-output-$(date +%Y-%m-%d)
