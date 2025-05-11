@@ -2,13 +2,19 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: 18
     commands:
-      - echo "Validating directory structure..."
-      - ls -la
-      - npm install
+      - echo "Installing dependencies..."
+      # Example for Python:
+      # - pip install -r requirements.txt
 
   build:
     commands:
-      - npm run build
+      - echo "Building the project..."
+      # Example build commands:
+      # - mvn package          # Java (Maven)
+      # - go build -o app      # Go
+      # - python setup.py build # Python
+
+artifacts:
+  files:
+    - "**/*"  # Output all files (customize as needed)
