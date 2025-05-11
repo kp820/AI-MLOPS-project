@@ -3,18 +3,26 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing dependencies..."
-      # Example for Python:
-      # - pip install -r requirements.txt
+      - echo "Installing Docker..."
+      - apt-get update -y && apt-get install -y docker.io
+
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR (ap-south-1)..."
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 528757828730.dkr.ecr.ap-south-1.amazonaws.com
 
   build:
     commands:
-      - echo "Building the project..."
-      # Example build commands:
-      # - mvn package          # Java (Maven)
-      # - go build -o app      # Go
-      # - python setup.py build # Python
+      - echo "Building Docker image..."
+      - docker build -t namespace/sampleproject:latest .
+      - docker tag namespace/sampleproject:latest 528757828730.dkr.ecr.ap-south-1.amazonaws.com/namespace/sampleproject:latest
 
-artifacts:
-  files:
-    - "**/*"  # Output all files (customize as needed)
+  post_build:
+    commands:
+      - echo "Pushing image to ECR..."
+      - docker push 528757828730.dkr.ecr.ap-south-1.amazonaws.com/namespace/sampleproject:latest
+      - echo "Image URI: 528757828730.dkr.ecr.ap-south-1.amazonaws.com/namespace/sampleproject:latest"
+
+env:
+  variables:
+    AWS_DEFAULT_REGION: "ap-south-1"  # Explicitly set region
