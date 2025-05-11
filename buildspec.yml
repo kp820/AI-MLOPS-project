@@ -4,7 +4,8 @@ phases:
   install:
     commands:
       - echo "Installing Docker..."
-      - apt-get update -y && apt-get install -y docker.io
+      - apt-get update -y
+      - apt-get install -y docker.io
 
   pre_build:
     commands:
@@ -25,4 +26,4 @@ phases:
 
 env:
   variables:
-    AWS_DEFAULT_REGION: "ap-south-1"  # Explicitly set region
+    AWS_DEFAULT_REGION: "ap-south-1"
