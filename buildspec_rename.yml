@@ -17,4 +17,8 @@ phases:
 
 artifacts:
   files:
+<<<<<<< HEAD
     - "**/*"  # Output all files (customize as needed)
+=======
+    - "**/*"  # Output all files (customize as needed)
+>>>>>>> e89249e42140fd9d5a418955b386a88e752a06b8
