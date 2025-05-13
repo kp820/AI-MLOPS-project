@@ -1,18 +1,9 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18
+# Deployment Automation 
 
-# Set the working directory
-WORKDIR /app
-
-# Copy package.json and install dependencies first
-COPY package*.json ./
+FROM node:12.2.0-alpine 
+WORKDIR app 
+COPY . .  
 RUN npm install
-
-# Copy the rest of the app source
-COPY . .
-
-# Expose port (if needed)
-EXPOSE 3000
-
-# Run the app (update if your app needs something else)
-CMD ["npm", "start"]
+RUN npm run test
+EXPOSE 8000
+CMD ["node","app.js"] ## this runs inside the docker 
