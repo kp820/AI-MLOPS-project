@@ -1,4 +1,4 @@
-# Deployment Automation 
+# Deployment Automation for codepipeline
 
 FROM node:12.2.0-alpine 
 WORKDIR app 
