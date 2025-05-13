@@ -1,9 +1,18 @@
-# Deployment Automation for codepipeline
+# Use an official Node.js runtime as a parent image
+FROM node:18
 
-FROM node:12.2.0-alpine 
-WORKDIR app 
-COPY . .  
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and install dependencies
+COPY package*.json ./
 RUN npm install
-RUN npm run test
-EXPOSE 8000
-CMD ["node","app.js"] ## this runs inside the docker 
+
+# Copy the rest of the app source
+COPY . .
+
+# Expose port (if needed)
+EXPOSE 3000
+
+# Run the app (update if your app needs something else)
+CMD ["npm", "start"]
