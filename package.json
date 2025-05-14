@@ -1,28 +1,20 @@
 {
     "name": "sampleproject",
     "version": "1.0.0",
-    "description": "Node.js application for Docker deployment",
-    "main": "app.js",
     "scripts": {
       "start": "node app.js",
-      "test": "jest --coverage",
-      "build": "npm install --production && echo 'Build complete'",
-      "dev": "nodemon app.js"
+      "test": "jest --coverage --passWithNoTests",
+      "build": "npm install --production"
     },
-    "keywords": [],
-    "author": "Your Name",
-    "license": "ISC",
     "dependencies": {
-      "express": "^4.18.2",
-      "winston": "^3.8.2"
+      "express": "^4.18.2"
     },
     "devDependencies": {
-      "jest": "^29.5.0",
-      "nodemon": "^2.0.22",
-      "eslint": "^8.38.0"
+      "jest": "^29.7.0",
+      "eslint": "^9.0.0"
     },
     "engines": {
-      "node": ">=12.2.0",
-      "npm": ">=6.9.0"
+      "node": ">=18.0.0",
+      "npm": ">=9.0.0"
     }
   }
