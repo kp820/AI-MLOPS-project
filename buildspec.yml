@@ -23,6 +23,6 @@ phases:
       - echo "Pushing image to ECR..."
       - docker push 528757828730.dkr.ecr.ap-south-1.amazonaws.com/namespace/sampleproject:latest
       
-env:
-  variables:
-    AWS_DEFAULT_REGION: "ap-south-1"
+artifacts:
+  files:
+    - '**/*'
