@@ -1,6 +1,6 @@
 # Deployment Automation 
 
-FROM node:12.2.0-alpine 
+FROM node:18-alpine 
 WORKDIR app 
 COPY . .  
 RUN npm install
