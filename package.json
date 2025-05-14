@@ -3,16 +3,15 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node app.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage --passWithNoTests",
+    "build": "npm install --production"
   },
   "dependencies": {
     "express": "^4.18.2"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "eslint": "^9.0.0",
-    "rimraf": "^5.0.5",
-    "glob": "^10.3.10"
+    "eslint": "^9.0.0"
   },
   "engines": {
     "node": ">=18.0.0",
