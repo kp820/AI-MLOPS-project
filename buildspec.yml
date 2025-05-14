@@ -3,26 +3,23 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing Docker dependencies..."
+      - echo "Installing Docker..."
       - apt-get update -y
       - apt-get install -y docker.io
 
   pre_build:
     commands:
-      - echo "Authenticating with ECR..."
+      - echo "Logging in to ECR..."
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 528757828730.dkr.ecr.ap-south-1.amazonaws.com
 
   build:
     commands:
       - echo "Building Docker image..."
-      - docker build -t namespace/sampleproject .
+      - docker build --no-cache -t namespace/sampleproject .
       - docker tag namespace/sampleproject:latest 528757828730.dkr.ecr.ap-south-1.amazonaws.com/namespace/sampleproject:latest
 
   post_build:
     commands:
       - echo "Pushing image to ECR..."
       - docker push 528757828730.dkr.ecr.ap-south-1.amazonaws.com/namespace/sampleproject:latest
-      
-env:
-  variables:
-    AWS_DEFAULT_REGION: "ap-south-1"
+      - echo "ECR Image URI: 528757828730.dkr.ecr.ap-south-1.amazonaws.com/namespace/sampleproject:latest"
