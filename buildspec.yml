@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing Docker dependencies..."
+      - echo "Installing Docker dependencies... "
       - apt-get update -y
       - apt-get install -y docker.io
 
